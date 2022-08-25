@@ -2,43 +2,32 @@
 using Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Services.Student;
+using Services.TeacherExt;
 
 namespace Student.WebMvc.Controllers
 {
-    public class StudentsController : Controller
+    public class TeachersController : Controller
     {
-        private readonly IAdmittedStudentService _admittedStudentService;
+        private readonly ITeacherService _teacherService;
 
-        public StudentsController(IAdmittedStudentService admittedStudentService)
+        public TeachersController(ITeacherService teacherService)
         {
-            _admittedStudentService = admittedStudentService;
+            _teacherService = teacherService;
         }
 
-        // GET: StudentsController
+        // GET: TeachersController
         public ActionResult Index()
         {
-            return View(_admittedStudentService.GetAll());
+            return View(_teacherService.GetAll());
         }
 
-        public ActionResult ByClass()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public JsonResult JsonByClass(string? name = null)
-        {
-            return Json(_admittedStudentService.ByClass(name));
-        }
-
-        // GET: StudentsController/Details/5
+        // GET: TeachersController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: StudentsController/Create
+        // GET: TeachersController/Create
         public ActionResult Create()
         {
             var genders = from Gender sex in Enum.GetValues(typeof(Gender))
@@ -52,28 +41,28 @@ namespace Student.WebMvc.Controllers
             return View();
         }
 
-        // POST: StudentsController/Create
+        // POST: TeachersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("StudentId,Name,Age,Sex,Class,Image,RollNo,ImageFile")] AdmittedStudent student)
+        public ActionResult Create([Bind("TeacherId,Name,Age,Sex,Image,ImageFile")] Teacher teacher)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _admittedStudentService.Add(student);
+                    _teacherService.Add(teacher);
                     return RedirectToAction(nameof(Index));
                 }
             }
             catch
             {
-                return View(student);
+                return View(teacher);
             }
 
-            return View(student);
+            return View(teacher);
         }
 
-        // GET: StudentsController/Edit/5
+        // GET: TeachersController/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,9 +71,9 @@ namespace Student.WebMvc.Controllers
             }
 
 
-            var student = _admittedStudentService.Find(Convert.ToInt32(id));
+            var teacher = _teacherService.Find(Convert.ToInt32(id));
 
-            if (student == null)
+            if (teacher == null)
             {
                 return NotFound();
             }
@@ -95,17 +84,17 @@ namespace Student.WebMvc.Controllers
                               GenderId = (int)sex,
                               Name = sex.ToString()
                           };
-            ViewBag.Genders = new SelectList(genders, "GenderId", "Name", student.Sex);
+            ViewBag.Genders = new SelectList(genders, "GenderId", "Name", teacher.Sex);
 
-            return View(student);
+            return View(teacher);
         }
 
-        // POST: StudentsController/Edit/5
+        // POST: TeachersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("StudentId,Name,Age,Sex,Class,Image,RollNo,ImageFile")] AdmittedStudent student)
+        public ActionResult Edit(int id, [Bind("TeacherId,Name,Age,Sex,Image,ImageFile")] Teacher teacher)
         {
-            if (id != student.StudentId)
+            if (id != teacher.TeacherId)
             {
                 return NotFound();
             }
@@ -113,14 +102,14 @@ namespace Student.WebMvc.Controllers
 
             if (ModelState.IsValid)
             {
-                _admittedStudentService.Update(student);
+                _teacherService.Update(teacher);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(student);
+            return View(teacher);
         }
 
-        // GET: StudentsController/Delete/5
+        // GET: TeachersController/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -129,17 +118,17 @@ namespace Student.WebMvc.Controllers
             }
 
 
-            var student = _admittedStudentService.Find(Convert.ToInt32(id));
+            var teacher = _teacherService.Find(Convert.ToInt32(id));
 
-            if (student == null)
+            if (teacher == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(teacher);
         }
 
-        // POST: StudentsController/Delete/5
+        // POST: TeachersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

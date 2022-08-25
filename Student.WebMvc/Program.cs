@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Repository.RepositoryPattern;
 using Services.Student;
+using Services.TeacherExt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAdmittedStudentService, AdmittedStudentService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 var app = builder.Build();
 
