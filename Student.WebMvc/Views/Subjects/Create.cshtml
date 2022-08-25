@@ -1,0 +1,51 @@
+﻿@model Domain.Entites.Subject
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="container mt-5">
+
+    <div class="card rounded-0">
+        <div class="card-header text-title h5">
+            NEW SUBJECT CREATE
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="form-group col-sm-4 mb-2">
+                        <label asp-for="Name" class="control-label fw-bold"></label>
+                        <input asp-for="Name" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4 mb-2">
+                        <label asp-for="Class" class="control-label fw-bold"></label>
+                        <input asp-for="Class" class="form-control" />
+                        <span asp-validation-for="Class" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-4 mb-2">
+                        <label asp-for="SubjectLanguage" class="control-label fw-bold"></label>
+                        <select asp-for="SubjectLanguage" class="form-control rounded-0" asp-items="ViewBag.Languages"></select>
+                        <span asp-validation-for="SubjectLanguage" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <button type="submit" class="btn btn-primary btn-sm rounded-0 mt-3">Save</button>
+                        <a class=" btn btn-sm btn-warning rounded-0 mt-3 float-right" asp-action="Index"><i class="fa fa-angle-left"></i> Back to List</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

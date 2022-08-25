@@ -14,5 +14,6 @@ namespace Repository
 
         public DbSet<AdmittedStudent> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
     }
 }

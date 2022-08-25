@@ -142,13 +142,22 @@ namespace Student.WebMvc.Controllers
         // POST: StudentsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
+
+            var student = _admittedStudentService.Find(Convert.ToInt32(id));
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
             try
             {
+                _admittedStudentService.Delete(student);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception)
             {
                 return View();
             }
