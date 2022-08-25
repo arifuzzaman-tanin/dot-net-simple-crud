@@ -10,5 +10,6 @@ namespace Services.Student
         AdmittedStudent Find(int id);
         List<AdmittedStudent> GetAll();
         List<IGrouping<int?, AdmittedStudent>> ByClass(string? name = null);
+        bool CheckDuplicateRoll(string roll);
     }
 }

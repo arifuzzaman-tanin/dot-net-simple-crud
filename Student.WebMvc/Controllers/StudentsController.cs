@@ -59,8 +59,23 @@ namespace Student.WebMvc.Controllers
         {
             try
             {
+                var genders = from Gender sex in Enum.GetValues(typeof(Gender))
+                              select new
+                              {
+                                  GenderId = (int)sex,
+                                  Name = sex.ToString()
+                              };
+                ViewBag.Genders = new SelectList(genders, "GenderId", "Name", student.Sex);
+
                 if (ModelState.IsValid)
                 {
+                    var isDuplicated = _admittedStudentService.CheckDuplicateRoll(student.RollNo);
+                    if (isDuplicated)
+                    {
+                        ModelState.AddModelError(string.Empty, "Duplicate roll.");
+                        return View(student);
+                    }
+
                     _admittedStudentService.Add(student);
                     return RedirectToAction(nameof(Index));
                 }
@@ -110,9 +125,23 @@ namespace Student.WebMvc.Controllers
                 return NotFound();
             }
 
+            var genders = from Gender sex in Enum.GetValues(typeof(Gender))
+                          select new
+                          {
+                              GenderId = (int)sex,
+                              Name = sex.ToString()
+                          };
+            ViewBag.Genders = new SelectList(genders, "GenderId", "Name", student.Sex);
 
             if (ModelState.IsValid)
             {
+                var isDuplicated = _admittedStudentService.CheckDuplicateRoll(student.RollNo);
+                if (isDuplicated)
+                {
+                    ModelState.AddModelError(string.Empty, "Duplicate roll.");
+                    return View(student);
+                }
+
                 _admittedStudentService.Update(student);
                 return RedirectToAction(nameof(Index));
             }
