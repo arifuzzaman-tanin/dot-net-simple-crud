@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Students";
+}
+<div class="card" id="app">
+    <div class="card-header bg-primary text-white">
+        <i class="fa fa-book text-white"></i> STUDENT LIST
+    </div>
+    <div class="card-body">
+        <div class="col-md-3 mb-2">
+            <input v-model='searchByName' class="form-control" type="search" placeholder="search by name" />
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Sex</th>
+                        <th>Class</th>
+                        <th>Roll No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="student in students">
+                        <td>{{student.name}}</td>
+                        <td>{{student.age}}</td>
+                        <td>{{student.sex}}</td>
+                        <td>{{student.class}}</td>
+                        <td>{{student.rollNo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    students: [],
+                    searchByName: ''
+                }
+            },
+            methods: {
+                getStudents() {
+                    this.students = [];
+                    axios.get('/Students/JsonByClass').then(response => {
+                        let _students = response.data;
+                        _students.forEach(datas => {
+                            datas.forEach(data => {
+                                this.students.push(data);
+                            });
+                        });
+
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                },
+                getSearchByName() {
+                    this.students = [];
+                    axios.get('/Students/JsonByClass?name=' + this.searchByName).then(response => {
+                        let _students = response.data;
+                        _students.forEach(datas => {
+                            datas.forEach(data => {
+                                this.students.push(data);
+                            });
+                        });
+
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+            },
+            created: function() {
+                this.getStudents();
+            },
+            watch: {
+                searchByName: function() {
+                    this.getSearchByName();
+                }
+            }
+        })
+    </script>
+
+}

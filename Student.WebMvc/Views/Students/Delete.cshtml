@@ -1,0 +1,58 @@
+﻿@model Domain.Entites.AdmittedStudent
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<div class="container mt-5">
+
+    <div class="card rounded-0">
+        <div class="card-header text-title h5 bg-danger text-white">
+            <i class="fa fa-trash"></i> DELETE STUDENT
+        </div>
+
+        <div class="p-3">
+            <h4 class="text-title text-danger">Are you sure you want to delete this?</h4>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Age)</th>
+                        <td>@Html.DisplayFor(model => model.Age)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Sex)</th>
+                        <td>@Html.DisplayFor(model => model.Sex)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Class)</th>
+                        <td>@Html.DisplayFor(model => model.Class)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.RollNo)</th>
+                        <td>@Html.DisplayFor(model => model.RollNo)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-sm-12 mb-2">
+                @if (Model.Image != null)
+                {
+                    <img src="@("~/Uploads/"+Model.Image)" asp-append-version="true" class="img-fluid" width="80" height="80" />
+                }
+            </div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="StudentId" />
+
+                <button type="submit" class="btn btn-danger btn-sm rounded-0 mt-3">Delete</button>
+                <a class=" btn btn-sm btn-warning rounded-0 mt-3 float-right" asp-action="Index"><i class="fa fa-angle-left"></i> Back to List</a>
+            </form>
+        </div>
+
+    </div>
+</div>
