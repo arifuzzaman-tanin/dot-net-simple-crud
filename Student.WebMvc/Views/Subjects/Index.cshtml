@@ -1,12 +1,12 @@
-﻿@model IEnumerable<Domain.Entites.Teacher>
+﻿@model IEnumerable<Domain.Entites.Subject>
 @{
-    ViewData["Title"] = "Teachers";
+    ViewData["Title"] = "Subjects";
 }
 
 
 <div class="card">
     <div class="card-header bg-primary text-white">
-        <i class="fa fa-book text-white"></i> TEACHER LIST
+        <i class="fa fa-book text-white"></i> SUBJECT LIST
     </div>
     <div class="card-body">
         <a class="text-decoration-none mb-3 btn btn-info btn-sm" asp-action="Create"><i class="fa fa-plus text-white"></i> Add new</a>
@@ -14,10 +14,9 @@
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                     <tr>
-                        <td>#</td>
                         <th>@Html.DisplayNameFor(model => model.Name)</th>
-                        <th>@Html.DisplayNameFor(model => model.Age)</th>
-                        <th>@Html.DisplayNameFor(model => model.Sex)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class)</th>
+                        <th>@Html.DisplayNameFor(model => model.SubjectLanguage)</th>
                         <th><span class="float-left">ACTION</span></th>
                     </tr>
                 </thead>
@@ -25,13 +24,12 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td><img src="@("~/Uploads/"+item.Image)" asp-append-version="true" class="img-fluid" width="80" height="80" /></td>
                             <td align="left">@Html.DisplayFor(modelItem => item.Name)</td>
-                            <td align="left">@Html.DisplayFor(modelItem => item.Age)</td>
-                            <td align="left">@Html.DisplayFor(modelItem => item.Sex)</td>
+                            <td align="left">@Html.DisplayFor(modelItem => item.Class)</td>
+                            <td align="left">@Html.DisplayFor(modelItem => item.SubjectLanguage)</td>
                             <td>
                                 <div class="float-left">
-                                    <a asp-action="Edit" asp-route-id="@item.TeacherId" class="btn btn-info btn-sm mr-3"><i class="fa fa-edit text-white"></i> Edit</a>
+                                    <a asp-action="Edit" asp-route-id="@item.SubjectId" class="btn btn-info btn-sm mr-3"><i class="fa fa-edit text-white"></i> Edit</a>
                                 </div>
                             </td>
                         </tr>

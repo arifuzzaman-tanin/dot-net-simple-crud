@@ -94,9 +94,23 @@ namespace Services.Student
 
         public List<IGrouping<int?, AdmittedStudent>> ByClass(string? name = null)
         {
-            Expression<Func<AdmittedStudent, bool>> expression = x => x.Name.Contains(name == null ? "" : name);
+            Expression<Func<AdmittedStudent, bool>> expression = x => x.Name.ToLower().Contains(name == null ? "" : name.ToLower());
             var data = _repository.GetAllBy(expression).ToList().GroupBy(x => x.Class);
             return data.ToList();
+        }
+
+        public bool CheckDuplicateRoll(string roll)
+        {
+            try
+            {
+                Expression<Func<AdmittedStudent, bool>> expression = x => x.RollNo == roll;
+                var data = _repository.GetAllBy(expression).FirstOrDefault();
+                return data != null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
